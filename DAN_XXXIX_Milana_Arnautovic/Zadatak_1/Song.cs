@@ -12,11 +12,14 @@ namespace Zadatak_1
 {
     public class Song
     {
-        static EventWaitHandle waitHande = new AutoResetEvent(false);
+        
+        public static readonly string FileAdvertising = @"../../Advertising.txt";
+        static Random random = new Random();
+        
         public int ID { get; set; }
         public string Author { get; set; }
         public string SongTitle { get; set; }
-        public  TimeSpan Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
         public Song(int iD, string author, string songTitle, TimeSpan duration)
         {
@@ -26,13 +29,10 @@ namespace Zadatak_1
             Duration = duration;
         }
 
-        public static List<Song> ListSongs { get; set; }
-        
+        public static List<Song> ListSongs = new List<Song>();
+        public static List<Advertising> ListAdvertisings = new List<Advertising>();
 
-        static Song()
-        {
-            ListSongs = new List<Song>();
-        }
+                
         /// <summary>
         /// Method that creates a class based on a text representation from a file
         /// </summary>
@@ -152,7 +152,7 @@ namespace Zadatak_1
 
         }
         /// <summary>
-        /// Method for finding table reservation
+        /// Method for finding song
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -176,7 +176,7 @@ namespace Zadatak_1
         /// </summary>
         public static void PlaySong()
         {
-            
+
             Console.WriteLine("Enter the number of the song you want to listen to:");
             int id = AuxiliaryClass.ReadInteger();
             Song song = FindSong(id);
@@ -186,9 +186,16 @@ namespace Zadatak_1
             {
                 Console.WriteLine(DateTime.Now + " " + song.SongTitle);
 
+                Thread thread = new Thread(() => StartAdvertising(count)); //Creating a thread
+                thread.Start();
+
                 while (count != 0)
                 {
-
+                    if (Console.KeyAvailable)
+                    {
+                        thread.Abort();
+                        break;
+                    }
                     Thread.Sleep(1000);
                     Console.WriteLine("The song is still playing");
 
@@ -196,6 +203,10 @@ namespace Zadatak_1
                 }
 
                 Console.WriteLine("The song is over");
+                ShowAllSongs();
+                PlaySong();
+                
+
             }
             else
             {
@@ -203,8 +214,74 @@ namespace Zadatak_1
             }
 
         }
-       
 
+
+
+        /// <summary>
+        ///  Method that creates a class based on a text representation from a file
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static Advertising FromFileToObjectAdvertising(string text)
+        {
+            string[] red = text.Split(',');
+
+            if (red.Length != 2)
+            {
+                Console.WriteLine("Error " + text);
+
+            }
+
+            int id = Int32.Parse(red[0]);
+            string name = red[1];
+
+
+            return new Advertising(id, name);
+        }
+
+
+        /// <summary>
+        /// Method for loading data
+        /// </summary>
+        /// <param name="nazivDatoteke"></param>
+        public static void AdvetisingFromFile(string nazivDatoteke)
+        {
+            if (System.IO.File.Exists(nazivDatoteke))
+            {
+                StreamReader reader1 = System.IO.File.OpenText(nazivDatoteke);
+
+                string linija = ",";
+                while ((linija = reader1.ReadLine()) != null)
+                {
+                    ListAdvertisings.Add(FromFileToObjectAdvertising(linija));
+                }
+                reader1.Close();
+            }
+            else
+            {
+                Console.WriteLine("The file does not exist or the path is incorrect.");
+
+
+            }
+
+        }
+        /// <summary>
+        /// Method for printing advertisements
+        /// </summary>
+        /// <param name="dur"></param>
+        public static void StartAdvertising(int dur)
+        {
+
+            AdvetisingFromFile(FileAdvertising);
+            for (int i = 0; i < dur * 5; i++)
+            {
+                Thread.Sleep(200);
+                int a = random.Next(0, 5);
+                Console.WriteLine(ListAdvertisings[a].Name);
+            }
+        }
+
+       
     }
 }
 

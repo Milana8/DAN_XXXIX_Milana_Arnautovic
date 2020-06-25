@@ -10,8 +10,8 @@ namespace Zadatak_1
 {
     class Program
     {
-        static readonly string FileSongs = @"../../Music.txt";
-        
+      public  static readonly string FileSongs = @"../../Music.txt";
+       
 
         static void Main(string[] args)
         {
@@ -55,6 +55,7 @@ namespace Zadatak_1
 
             Thread song = new Thread(Song.PlaySong);//Creatig thread
             song.Start();//thread start
+           
         }
 
         
