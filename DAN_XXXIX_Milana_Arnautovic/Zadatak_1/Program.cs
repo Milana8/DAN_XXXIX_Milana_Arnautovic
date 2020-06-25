@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Zadatak_1
@@ -14,6 +15,9 @@ namespace Zadatak_1
 
         static void Main(string[] args)
         {
+
+           
+
             Song.SongsFromFile(FileSongs);
             int option;
             bool repeat = true;
@@ -48,7 +52,13 @@ namespace Zadatak_1
                 
             }
             while (repeat);
+
+            Thread song = new Thread(Song.PlaySong);//Creatig thread
+            song.Start();//thread start
         }
+
+        
+      
     }
 }
 

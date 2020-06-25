@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Zadatak_1
 {
     public class Song
     {
-
+        static EventWaitHandle waitHande = new AutoResetEvent(false);
         public int ID { get; set; }
         public string Author { get; set; }
         public string SongTitle { get; set; }
-        public TimeSpan Duration { get; set; }
+        public  TimeSpan Duration { get; set; }
 
         public Song(int iD, string author, string songTitle, TimeSpan duration)
         {
@@ -25,6 +27,7 @@ namespace Zadatak_1
         }
 
         public static List<Song> ListSongs { get; set; }
+        
 
         static Song()
         {
@@ -173,12 +176,26 @@ namespace Zadatak_1
         /// </summary>
         public static void PlaySong()
         {
+            
             Console.WriteLine("Enter the number of the song you want to listen to:");
             int id = AuxiliaryClass.ReadInteger();
             Song song = FindSong(id);
+            int a = song.Duration.Hours * 3600000 + song.Duration.Minutes * 60000 + song.Duration.Seconds * 1000;
+            int count = a / 1000;
             if (song != null)
             {
                 Console.WriteLine(DateTime.Now + " " + song.SongTitle);
+
+                while (count != 0)
+                {
+
+                    Thread.Sleep(1000);
+                    Console.WriteLine("The song is still playing");
+
+                    count--;
+                }
+
+                Console.WriteLine("The song is over");
             }
             else
             {
@@ -186,10 +203,7 @@ namespace Zadatak_1
             }
 
         }
-       public static void SongDuration()
-        {
-            
-        }
+       
 
     }
 }
