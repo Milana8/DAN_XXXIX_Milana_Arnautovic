@@ -48,7 +48,7 @@ namespace Zadatak_1
             float number;
             while (Single.TryParse(Console.ReadLine(), out number) == false)
             {
-                Console.Write("GRESKA - Pogresno unsesena vrednost, pokusajte ponovo: ");
+                Console.Write("Wrong input, try again: ");
             }
             return number;
         }
@@ -59,7 +59,7 @@ namespace Zadatak_1
             char number;
             while (Char.TryParse(Console.ReadLine(), out number) == false)
             {
-                Console.Write("GRESKA - Pogresno unsesena vrednost, pokusajte ponovo: ");
+                Console.Write("Wrong input, try again: ");
             }
             return number;
         }

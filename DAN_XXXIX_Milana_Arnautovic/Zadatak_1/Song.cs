@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Zadatak_1
 {
-    class Song
+    public class Song
     {
 
         public int ID { get; set; }
@@ -30,14 +30,18 @@ namespace Zadatak_1
         {
             ListSongs = new List<Song>();
         }
-
-        public static Song FromFileToObject(string tekst)
+        /// <summary>
+        /// Method that creates a class based on a text representation from a file
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static Song FromFileToObject(string text)
         {
-            string[] red = tekst.Split(',');
+            string[] red = text.Split(',');
 
             if (red.Length != 4)
             {
-                Console.WriteLine("Error " + tekst);
+                Console.WriteLine("Error " + text);
 
             }
 
@@ -60,7 +64,9 @@ namespace Zadatak_1
             sb.Append(ID + "," + Author + "," + SongTitle + "," + Duration);
             return sb.ToString();
         }
-
+        /// <summary>
+        /// method for displaying all songs
+        /// </summary>
         public static void ShowAllSongs()
         {
             for (int i = 0; i < ListSongs.Count; i++)
@@ -68,6 +74,10 @@ namespace Zadatak_1
                 Console.WriteLine(ListSongs[i]);
             }
         }
+        /// <summary>
+        /// Method for loading data
+        /// </summary>
+        /// <param name="nazivDatoteke"></param>
         public static void SongsFromFile(string nazivDatoteke)
         {
             if (System.IO.File.Exists(nazivDatoteke))
@@ -89,16 +99,18 @@ namespace Zadatak_1
             }
 
         }
-
+        /// <summary>
+        /// ethod for adding a new song
+        /// </summary>
         public static void AddSong()
         {
             int iD = ListSongs.Count() + 1;
 
             Console.WriteLine("Author:");
-            string author = Console.ReadLine();
+            string author = AuxiliaryClass.ReadText();
 
             Console.WriteLine("Song Title:");
-            string songTitle = Console.ReadLine();
+            string songTitle = AuxiliaryClass.ReadText();
 
 
             string input = " ";
@@ -112,7 +124,10 @@ namespace Zadatak_1
             Song song = new Song(iD, author, songTitle, duration);
             ListSongs.Add(song);
         }
-
+        /// <summary>
+        /// Saving data to a file
+        /// </summary>
+        /// <param name="nazivDatoteke"></param>
         public static void SaveSongToFile(string nazivDatoteke)
         {
             if (System.IO.File.Exists(nazivDatoteke))
@@ -133,6 +148,11 @@ namespace Zadatak_1
             }
 
         }
+        /// <summary>
+        /// Method for finding table reservation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Song FindSong(int id)
         {
             Song retVal = null;
@@ -148,7 +168,9 @@ namespace Zadatak_1
             return retVal;
         }
 
-
+        /// <summary>
+        /// Method for play song
+        /// </summary>
         public static void PlaySong()
         {
             Console.WriteLine("Enter the number of the song you want to listen to:");
@@ -156,13 +178,17 @@ namespace Zadatak_1
             Song song = FindSong(id);
             if (song != null)
             {
-                Console.WriteLine(DateTime.Now + song.SongTitle);
+                Console.WriteLine(DateTime.Now + " " + song.SongTitle);
             }
             else
             {
                 Console.WriteLine("Wrong number, enter the correct number");
             }
 
+        }
+       public static void SongDuration()
+        {
+            
         }
 
     }

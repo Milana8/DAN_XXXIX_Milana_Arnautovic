@@ -1,4 +1,6 @@
-﻿1,Lana Del Rey,Ride,00:04:22
-2,Lana Del Rey,Born,00:11:22
-3,Jessie J,Price ,00:03:22
-4,2,2,00:00:00
+﻿1,Lana Del Rey,Ride,00:03:20
+2,Lana Del Rey,Born,00:02:34
+3,Jessie J,Price ,00:03:55
+4,Jessie J,Alive,00:03:00
+5,Jessie J,Who You Are,00:02:58
+6,Lana Del Rey,Ultraviolence,00:04:22

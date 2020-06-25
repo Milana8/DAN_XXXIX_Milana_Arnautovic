@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,8 @@ namespace Zadatak_1
 {
     class Program
     {
-        private static readonly string FileSongs = @"../../Music.txt";
-
-
-
-
-
-
+        static readonly string FileSongs = @"../../Music.txt";
+        
 
         static void Main(string[] args)
         {
